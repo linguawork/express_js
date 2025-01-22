@@ -1,5 +1,12 @@
 import express from 'express'
 
+//14:48db framework
+import mongoose from 'mongoose'
+
+//DB. user and admin are automatically replaced in the URL in MongoDB
+const DB_URL = 'mongodb+srv://admin:admin@clusterforexpressulbi.ng1yv.mongodb.net/?retryWrites=true&w=majority&appName=ClusterForExpressUlbi'
+
+
 
 console.log('Writing express')
 const PORT = 5002
@@ -59,7 +66,39 @@ app.post('/', (req, res) => {
 })
 
 
-app.listen(
-    PORT, 
-    ()=>console.log(`Server started on port: ${PORT}`)
-)
+//DB part, create a function and place app.listen() inside
+async function startApp(){
+    try{
+
+/*
+    connect DB via mongoose before listening to the port, 
+    await operation
+    to test try-catch we may change URL
+
+    16:39
+    If you're using Mongoose 6.x or later, 
+    you don’t need { useUnifiedTopology: true } anymore.
+    In Mongoose 6.x and later, you don't need { useNewUrlParser: true }.
+*/
+await mongoose.connect(DB_URL)
+
+        app.listen(
+            PORT, 
+            ()=>console.log(`Server started on port: ${PORT}`)
+        )
+    }catch(e){
+        console.log(e)
+    }
+}
+
+
+
+startApp()
+
+
+/*
+    https://whatismyipaddress.com/
+
+    school IP address
+    62.176.248.102
+*/

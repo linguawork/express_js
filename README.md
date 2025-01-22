@@ -40,3 +40,29 @@ npm i -D nodemon
   }
 ```
 Для запуска в режиме разработки: npm run dev
+
+
+*********************************************
+14:20
+DB part:
+enter MongoDB account,
+create project,
+build cluster (free), 
+connect (set permissions for IP addresses),
+create a DB user and pass,
+connect to app with native drivers,
+get the url,
+cp the url to your app,
+
+add dependence to work with DB:
+npm i mongoose OR npm i mongoDB
+```
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongodb": "^6.12.0",
+    "mongoose": "^8.9.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+```
