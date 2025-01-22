@@ -9,6 +9,17 @@ const app = express()
 //endpoint get: 1st param: address, second - callback f
 app.get('/', (req, res) => {
 
+    // query parameters при запросе от клиента
+    // ?test=123&query=asfasf&third=addsa 
+    console.log(req.query)
+    /*
+        http://localhost:5002/?test=123&query=asfasf&third=addsa
+        will output:
+        { test: '123', query: 'asfasf', third: 'addsa' }
+    
+    */
+
+
     //ответ клиенту
     res.status(200).json('Сервер работает ')
     /*
