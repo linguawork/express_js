@@ -18,3 +18,18 @@ Inside package.json start script (node js) will fire up the project, type module
   },
 ```
 
+```
+
+
+При каждом изменении нужно перезапускать сервер.
+Чтобы не перезапускать нужно ввести команду:
+
+```
+npm i -D nodemon
+```
+Установка зависимости позволяет не перезапускать сервер при изменениях в коде
+```
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+```
