@@ -10,11 +10,20 @@ const app = express()
 app.get('/', (req, res) => {
 
     //ответ клиенту
-    res.status(200).json('Сервер работает снова')
+    res.status(200).json('Сервер работает ')
     /*
     При каждом изменении нужно перезапускать сервер.
     Чтобы не перезапускать нужно ввести команду:
     npm i -D nodemon
+
+
+    "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+
+    }
+    
+    Для запуска в режиме разработки: npm run dev
     
     */
 

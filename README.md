@@ -17,8 +17,8 @@ Inside package.json start script (node js) will fire up the project, type module
     "start": "node index.js"
   },
 ```
+To start the project: npm start
 
-```
 
 
 При каждом изменении нужно перезапускать сервер.
@@ -32,4 +32,11 @@ npm i -D nodemon
   "devDependencies": {
     "nodemon": "^3.1.9"
   }
+
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+
+  }
 ```
+Для запуска в режиме разработки: npm run dev
