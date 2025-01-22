@@ -12,10 +12,13 @@ app.get('/', (req, res) => {
     // query parameters при запросе от клиента
     // ?test=123&query=asfasf&third=addsa 
     console.log(req.query)
+    console.log(req.query.test)
+
     /*
         http://localhost:5002/?test=123&query=asfasf&third=addsa
         will output:
         { test: '123', query: 'asfasf', third: 'addsa' }
+         123
     
     */
 
