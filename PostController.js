@@ -136,10 +136,22 @@ class PostController{
         console.log(req.body)
     
         try {
-            const {author, title, content, picture} = req.body
-            const post = await Post.create({author, title, content, picture})
-    
-            res.status(200).json(post) //возврат поста
+            //28:18, приходить пост от клиента (от юзера с браузера)
+            const post = req.body
+            if(!post){
+                return res.status(400).json({message: "Id не найден"})
+            }
+            /*
+                Creates a findOneAndUpdate query, filtering by the given _id.
+                1st parameter: id, 
+                2nd: update
+                3d: options
+
+
+                https://mongoosejs.com/docs/tutorials/findoneandupdate.html
+            */
+            const updatedPost = await Post.findByIdAndUpdate(post._id, post, {new: true})
+            return res.status(200).json(updatedPost) //возврат поста
         } catch(error) {
             res.status(500).json(error) 
         }
@@ -153,10 +165,15 @@ class PostController{
         console.log(req.body)
     
         try {
-            const {author, title, content, picture} = req.body
-            const post = await Post.create({author, title, content, picture})
-    
-            res.status(200).json(post) //возврат поста
+            const {id} = req.params
+            if(!id){
+                return res.status(400).json({message: "Id не найден"})
+            }
+            /*
+                osejs.com/docs/api/model.html#Model.findByIdAndDelete()          
+            */
+            const post = await Post.findByIdAndDelete(id)
+            return  res.status(200).json(post) //возврат поста
         } catch(error) {
             res.status(500).json(error) 
         }
