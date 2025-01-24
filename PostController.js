@@ -31,33 +31,33 @@
     в современных реализациях ES6 модулей это стало обязательным.
 */
 
-
-
 //обязательно писать .js
-import Post from './Post.js'
-
+import Post from './Post.js';
 
 //25:22 Интересно что в классе просто функции, конструктора нет
 
-class PostController{
- //not an arrow function in class, to keep: this
-    async create(req, res){
 
+//34:21
+import PostService from './PostService.js';
+
+class PostController {
+    //not an arrow function in class, to keep: this
+    async create(req, res) {
         console.log(
             `Dont forget to run: npm run dev
             Содержание тела запроса от клиента,
-            post req from Postman: `)
-        console.log(req.body)
-        // console.log(req.body.author)
+            post req from Postman: `
+        );
+        console.log(req.body);
 
-
-    
         try {
             //19:31запрос от клиента (Postman)
             //В постмане создается объект именно с этими полями
             //Он приходит в body
-            const {author, title, content, picture} = req.body
-            
+
+            //34:27 Удаляем деструктуризацию так как импортируем PostService 
+            // const { author, title, content, picture } = req.body;
+
             /* 
                 Import Post model: (как шаблон) примеряет на себя боди.
                 модель Mongoose сама по себе не выполняет глубокую 
@@ -75,71 +75,77 @@ class PostController{
                 из запроса проверяются на соответствие шаблону 
                 (модели Post).
             */
-            const post = await Post.create({author, title, content, picture})
-    
+           //изменяем код под PostService
+            //было
+            // const post = await Post.create({ author, title, content, picture });
+            
+            //стало: создаем пост, который пришел в req.body
+            const post = await PostService.create(req.body);
+
             //ответ клиенту тоже в Postman(19:31)
             //res.status(200).json('Сервер работает ')
-            res.status(200).json(post) //возврат поста
-        } catch(error) {
-            res.status(500).json(error) 
+            res.status(200).json(post); //возврат поста
+        } catch (error) {
+            res.status(500).json(error);
         }
     }
 
-    async getAll(req, res){
+    async getAll(req, res) {
         console.log(
             `Dont forget to run: npm run dev
             Содержание тела запроса от клиента,
-            GET req from Postman: `)
-        console.log(req.body)
-    
+            GET req from Postman: `
+        );
+        console.log(req.body);
+
         try {
             //Creates a find query: gets a list of documents that match filter.
             //Если ничего не подавать в find, то все посты возвращает, массив объектов
-               const posts = await Post.find()
+            const posts = await Post.find();
             //Switch off BODY in Get request in Postman
 
-            return  res.status(200).json(posts) //get all the posts and sending back
-        } catch(error) {
-            res.status(500).json(error) 
+            return res.status(200).json(posts); //get all the posts and sending back
+        } catch (error) {
+            res.status(500).json(error);
         }
     }
 
-    async getOne(req, res){
+    async getOne(req, res) {
         console.log(
             `Dont forget to run: npm run dev
             Содержание тела запроса от клиента,
             GET req from Postman
-            for one id: `)
-        console.log(req.body)
-    
-        try {
-            const {id} = req.params
-            if(!id){
-        
-                return res.status(400).json({message: "Id не найден"})
+            for one id: `
+        );
+        console.log(req.body);
 
+        try {
+            const { id } = req.params;
+            if (!id) {
+                return res.status(400).json({ message: 'Id не найден' });
             }
 
             //findByID
-            const id_post = await Post.findById(id)
-            return  res.status(200).json(id_post) //get all the posts and sending back
-        } catch(error) {
-            res.status(500).json(error) 
+            const id_post = await Post.findById(id);
+            return res.status(200).json(id_post); //get all the posts and sending back
+        } catch (error) {
+            res.status(500).json(error);
         }
     }
 
-    async update(req, res){
+    async update(req, res) {
         console.log(
             `Dont forget to run: npm run dev
             Содержание тела запроса от клиента,
-            PUT req from Postman: `)
-        console.log(req.body)
-    
+            PUT req from Postman: `
+        );
+        console.log(req.body);
+
         try {
             //28:18, приходить пост от клиента (от юзера с браузера)
-            const post = req.body
-            if(!post){
-                return res.status(400).json({message: "Id не найден"})
+            const post = req.body;
+            if (!post) {
+                return res.status(400).json({ message: 'Id не найден' });
             }
             /*
                 Creates a findOneAndUpdate query, filtering by the given _id.
@@ -150,39 +156,38 @@ class PostController{
 
                 https://mongoosejs.com/docs/tutorials/findoneandupdate.html
             */
-            const updatedPost = await Post.findByIdAndUpdate(post._id, post, {new: true})
-            return res.status(200).json(updatedPost) //возврат поста
-        } catch(error) {
-            res.status(500).json(error) 
+            const updatedPost = await Post.findByIdAndUpdate(post._id, post, {
+                new: true,
+            });
+            return res.status(200).json(updatedPost); //возврат поста
+        } catch (error) {
+            res.status(500).json(error);
         }
     }
 
-    async delete(req, res){
+    async delete(req, res) {
         console.log(
             `Dont forget to run: npm run dev
             Содержание тела запроса от клиента,
-            DELETE req from Postman: `)
-        console.log(req.body)
-    
+            DELETE req from Postman: `
+        );
+        console.log(req.body);
+
         try {
-            const {id} = req.params
-            if(!id){
-                return res.status(400).json({message: "Id не найден"})
+            const { id } = req.params;
+            if (!id) {
+                return res.status(400).json({ message: 'Id не найден' });
             }
             /*
                 osejs.com/docs/api/model.html#Model.findByIdAndDelete()          
             */
-            const post = await Post.findByIdAndDelete(id)
-            return  res.status(200).json(post) //возврат поста
-        } catch(error) {
-            res.status(500).json(error) 
+            const post = await Post.findByIdAndDelete(id);
+            return res.status(200).json(post); //возврат поста
+        } catch (error) {
+            res.status(500).json(error);
         }
     }
-
-
-
 }
 
-
 //интересно что экспортируем инициализацию экземпляра класса
-export default new PostController()
+export default new PostController();

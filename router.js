@@ -4,29 +4,29 @@ endpoints from Router
 Описание маршрутов
 */
 
-import  Router  from "express"
+import Router from 'express';
 
 //remove and import to Controller
 // import Post from "./Post.js"
 
 //вынесли логику файла в Контроллер, перенесли логику коллбека
-import PostController from "./PostController.js"
+import PostController from './PostController.js';
 
-const router = Router()
+const router = Router();
 
 //crud methods for one route: /posts
 //copied the call back function from the index file for post function
 //endpoint get: 1st param: address, second - callback f
 
 //теперь коллбек просто имопртировали как класс из файла Контроллер
-router.post('/posts', PostController.create)
+router.post('/posts', PostController.create);
 
-router.get('/posts', PostController.getAll)
-router.get('/posts/:id', PostController.getOne)
-router.put('/posts', PostController.update)
-router.delete('/posts/:id', PostController.delete)
+router.get('/posts', PostController.getAll);
+router.get('/posts/:id', PostController.getOne);
+router.put('/posts', PostController.update);
+router.delete('/posts/:id', PostController.delete);
 
-export default router
+export default router;
 
 /*
     in a RESTful API, CRUD methods (Create, Read, Update, and Delete)
