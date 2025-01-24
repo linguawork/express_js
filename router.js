@@ -21,8 +21,8 @@ const router = Router()
 //теперь коллбек просто имопртировали как класс из файла Контроллер
 router.post('/posts', PostController.create)
 
-router.get('/posts')
-router.get('/posts/:id')
+router.get('/posts', PostController.getAll)
+router.get('/posts/:id', PostController.getOne)
 router.put('/posts')
 router.delete('/posts/:id')
 
