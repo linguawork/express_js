@@ -50,18 +50,17 @@ post запрос из Postman сработает только по такой U
 //DB part, create a function and place app.listen() inside
 async function startApp(){
     try{
+        /*
+            connect DB via mongoose before listening to the port, 
+            await operation
+            to test try-catch we may change URL
 
-/*
-    connect DB via mongoose before listening to the port, 
-    await operation
-    to test try-catch we may change URL
-
-    16:39
-    If you're using Mongoose 6.x or later, 
-    you don’t need { useUnifiedTopology: true } anymore.
-    In Mongoose 6.x and later, you don't need { useNewUrlParser: true }.
-*/
-await mongoose.connect(DB_URL)
+            16:39
+            If you're using Mongoose 6.x or later, 
+            you don’t need { useUnifiedTopology: true } anymore.
+            In Mongoose 6.x and later, you don't need { useNewUrlParser: true }.
+        */
+        await mongoose.connect(DB_URL)
 
         app.listen(
             PORT, 

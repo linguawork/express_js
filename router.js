@@ -5,49 +5,21 @@ endpoints from Router
 */
 
 import  Router  from "express"
-import Post from "./Post.js"
+
+//remove and import to Controller
+// import Post from "./Post.js"
+
+//вынесли логику файла в Контроллер, перенесли логику коллбека
+import PostController from "./PostController.js"
 
 const router = Router()
 
 //crud methods for one route: /posts
 //copied the call back function from the index file for post function
 //endpoint get: 1st param: address, second - callback f
-router.post('/posts', async (req, res) => {
 
-    console.log(req.body)
-
-    try {
-        //19:31запрос от клиента (Postman)
-        //В постмане создается объект именно с этими полями
-        //Он приходит в body
-        const {author, title, content, picture} = req.body
-        
-        /* 
-            Import Post model: (как шаблон) примеряет на себя боди.
-            модель Mongoose сама по себе не выполняет глубокую 
-            валидацию данных перед их сохранением (например, 
-            не проверяет длину строки или формат содержимого), 
-            но она гарантирует, что передаваемые данные будут 
-            соответствовать базовой структуре (например,
-            author — это строка, а picture — строка, 
-            но она может быть пустой).
-
-            выполняет создание нового документа в базе данных 
-            на основе данных, переданных в req.body. Это можно 
-            рассматривать как своего рода "проверку соответствия"
-             или "проверку формата" — когда данные 
-             из запроса проверяются на соответствие шаблону 
-             (модели Post).
-        */
-        const post = await Post.create({author, title, content, picture})
-
-        //ответ клиенту тоже в Postman(19:31)
-        //res.status(200).json('Сервер работает ')
-        res.status(200).json(post) //возврат поста
-    } catch(error) {
-        res.status(500).json(error) 
-    }
-})
+//теперь коллбек просто имопртировали как класс из файла Контроллер
+router.post('/posts', PostController.create)
 
 router.get('/posts')
 router.get('/posts/:id')
