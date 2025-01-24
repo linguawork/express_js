@@ -5,7 +5,7 @@ import mongoose from 'mongoose'
 
 //19:00
 import Post from './Post.js'
-import { triggerAsyncId } from 'async_hooks'
+
 
 //23:31 это импорт для регистрации 
 import router from './router.js'

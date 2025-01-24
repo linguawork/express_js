@@ -43,7 +43,14 @@ class PostController{
  //not an arrow function in class, to keep: this
     async create(req, res){
 
+        console.log(
+            `Dont forget to run: npm run dev
+            Содержание тела запроса от клиента,
+            post req from Postman: `)
         console.log(req.body)
+        // console.log(req.body.author)
+
+
     
         try {
             //19:31запрос от клиента (Postman)
