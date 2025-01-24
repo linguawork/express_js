@@ -117,18 +117,13 @@ class PostController {
             GET req from Postman
             for one id: `
         );
-        console.log(req.body);
+        // console.log(req.body);
 
         try {
-            const { id } = req.params;
-            if (!id) {
-                return res.status(400).json({ message: 'Id не найден' });
-            }
-
-            //findByID
-            const id_post = await Post.findById(id);
+            //сокращение через  PostService.getOne
+            const id_post = await PostService.getOne(req.params.id);
             return res.status(200).json(id_post); //get all the posts and sending back
-        } catch (error) {
+        } catch(error) {
             res.status(500).json(error);
         }
     }

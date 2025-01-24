@@ -14,7 +14,7 @@ import Post from './Post.js';
 class PostService {
     //подали объект
     async create(post) {
-        console.log(`Создаем пост в PostService `);
+        console.log(`Создаем пост в PostService`);
         console.log(post);
         //создаем пост
         const createdPost = await Post.create(post);
@@ -40,25 +40,15 @@ class PostService {
         }
     }
 
-    async getOne(req, res) {
-        console.log(
-            `Dont forget to run: npm run dev
-            Содержание тела запроса от клиента,
-            GET req from Postman
-            for one id: `
-        );
-        console.log(req.body);
+    async getOne(id) {
+        console.log(`Ищем по id в PostService`);
+        console.log(id);
 
-        try {
-            const { id } = req.params;
-            if (!id) {
-                return res.status(400).json({ message: 'Id не найден' });
-            }
-            const id_post = await Post.findById(id);
-            return res.status(200).json(id_post); //get all the posts and sending back
-        } catch (error) {
-            res.status(500).json(error);
+        if (!id) {
+            throw new Error('Id не найден');
         }
+        const post = await Post.findById(id);
+        return post; //get one post and sending back
     }
 
     async update(req, res) {
