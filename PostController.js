@@ -48,7 +48,7 @@ class PostController {
             Содержание тела запроса от клиента,
             post req from Postman: `
         );
-        console.log(req.body);
+        // console.log(req.body);
 
         try {
             //19:31запрос от клиента (Postman)
@@ -94,14 +94,13 @@ class PostController {
         console.log(
             `Dont forget to run: npm run dev
             Содержание тела запроса от клиента,
-            GET req from Postman: `
+            GET all req from Postman: `
         );
-        console.log(req.body);
 
         try {
             //Creates a find query: gets a list of documents that match filter.
             //Если ничего не подавать в find, то все посты возвращает, массив объектов
-            const posts = await Post.find();
+            const posts = await PostService.getAll();
             //Switch off BODY in Get request in Postman
 
             return res.status(200).json(posts); //get all the posts and sending back
@@ -134,26 +133,17 @@ class PostController {
             Содержание тела запроса от клиента,
             PUT req from Postman: `
         );
-        console.log(req.body);
+        console.log(req.body);// id in request.body is _id (with underline)
 
         try {
-            //28:18, приходить пост от клиента (от юзера с браузера)
-            const post = req.body;
-            if (!post) {
-                return res.status(400).json({ message: 'Id не найден' });
-            }
             /*
                 Creates a findOneAndUpdate query, filtering by the given _id.
                 1st parameter: id, 
                 2nd: update
                 3d: options
-
-
                 https://mongoosejs.com/docs/tutorials/findoneandupdate.html
             */
-            const updatedPost = await Post.findByIdAndUpdate(post._id, post, {
-                new: true,
-            });
+            const updatedPost = await PostService.update(req.body);//внутри body уже декомпозицию делает
             return res.status(200).json(updatedPost); //возврат поста
         } catch (error) {
             res.status(500).json(error);
@@ -169,14 +159,10 @@ class PostController {
         console.log(req.body);
 
         try {
-            const { id } = req.params;
-            if (!id) {
-                return res.status(400).json({ message: 'Id не найден' });
-            }
             /*
                 osejs.com/docs/api/model.html#Model.findByIdAndDelete()          
             */
-            const post = await Post.findByIdAndDelete(id);
+            const post = await PostService.delete(req.params.id);
             return res.status(200).json(post); //возврат поста
         } catch (error) {
             res.status(500).json(error);

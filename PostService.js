@@ -21,29 +21,25 @@ class PostService {
         return createdPost
     }
 
-    async getAll(req, res) {
-        console.log(
-            `Dont forget to run: npm run dev
-            Содержание тела запроса от клиента,
-            GET req from Postman: `
-        );
-        console.log(req.body);
+    async getAll() {
+        console.log(`Получаем все посты в PostService`);
+        // console.log(posts);
 
-        try {
+
             //Creates a find query: gets a list of documents that match filter.
             //Если ничего не подавать в find, то все посты возвращает, массив объектов
             const posts = await Post.find();
             //Switch off BODY in Get request in Postman
-            return res.status(200).json(posts); //get all the posts and sending back
-        } catch (error) {
-            res.status(500).json(error);
-        }
+
+            //no need to convert to json, Controller will convert
+            // return res.status(200).json(posts); //get all the posts and sending back
+            return posts; //get all the posts and sending back
+
     }
 
     async getOne(id) {
-        console.log(`Ищем по id в PostService`);
+        console.log(`Finding by id in PostService`);
         console.log(id);
-
         if (!id) {
             throw new Error('Id не найден');
         }
@@ -51,50 +47,29 @@ class PostService {
         return post; //get one post and sending back
     }
 
-    async update(req, res) {
-        console.log(
-            `Dont forget to run: npm run dev
-            Содержание тела запроса от клиента,
-            PUT req from Postman: `
-        );
-        console.log(req.body);
-
-        try {
-            const post = req.body;
-            if (!post) {
-                return res.status(400).json({ message: 'Id не найден' });
-            }
-
-            const updatedPost = await Post.findByIdAndUpdate(post._id, post, {
-                new: true,
-            });
-            return res.status(200).json(updatedPost); //возврат поста
-        } catch (error) {
-            res.status(500).json(error);
+    //req.body has req._id, it is presented with underline
+    async update(post) {
+        console.log(`Update по post.id в PostService`);
+        //_id is in the postman, underlined id 
+        console.log(post._id);
+        if (!post._id) {
+            throw new Error('Id не найден');
         }
+        const updatedPost = await Post.findByIdAndUpdate(post._id, post, {new: true});
+        return updatedPost; //возврат поста
     }
 
-    async delete(req, res) {
-        console.log(
-            `Dont forget to run: npm run dev
-            Содержание тела запроса от клиента,
-            DELETE req from Postman: `
-        );
-        console.log(req.body);
-
-        try {
-            const { id } = req.params;
-            if (!id) {
-                return res.status(400).json({ message: 'Id не найден' });
-            }
-            /*
-                osejs.com/docs/api/model.html#Model.findByIdAndDelete()          
-            */
-            const post = await Post.findByIdAndDelete(id);
-            return res.status(200).json(post); //возврат поста
-        } catch (error) {
-            res.status(500).json(error);
+    async delete(id) {
+        console.log(`Deleting by id in PostService`);
+        console.log(id);
+        if (!id) {
+            throw new Error('Id не найден');
         }
+        /*
+            osejs.com/docs/api/model.html#Model.findByIdAndDelete()          
+        */
+        const post = await Post.findByIdAndDelete(id);
+        return post; //возврат поста
     }
 }
 
