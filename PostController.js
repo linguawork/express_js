@@ -40,6 +40,7 @@ import Post from './Post.js';
 //34:21
 import PostService from './PostService.js';
 
+
 class PostController {
     //not an arrow function in class, to keep: this
     async create(req, res) {
@@ -51,6 +52,12 @@ class PostController {
         // console.log(req.body);
 
         try {
+
+            /*output of files from request:
+            после подключения file uploader*/
+            // console.log(req.files)
+
+            
             //19:31запрос от клиента (Postman)
             //В постмане создается объект именно с этими полями
             //Он приходит в body
@@ -80,7 +87,9 @@ class PostController {
             // const post = await Post.create({ author, title, content, picture });
             
             //стало: создаем пост, который пришел в req.body
-            const post = await PostService.create(req.body);
+            //40:46 adding picture as a param
+            //saving it in fileService.js
+            const post = await PostService.create(req.body, req.files.picture);
 
             //ответ клиенту тоже в Postman(19:31)
             //res.status(200).json('Сервер работает ')

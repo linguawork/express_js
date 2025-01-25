@@ -8,6 +8,8 @@ import Post from './Post.js';
 
 //23:31 это импорт для регистрации
 import router from './router.js';
+//39:29 это для загрузки файлов, картинок
+import fileUpload from 'express-fileupload';
 
 //DB. user and admin are automatically replaced in the URL in MongoDB
 const DB_URL =
@@ -16,8 +18,18 @@ const DB_URL =
 console.log('Writing express');
 const PORT = 5002;
 const app = express();
+
+/** ПРОГРАММЫ К КОТОРЫМ ПОДКЛЮЧАЕМСЯ НАЗЫВАЮТСЯ MIDDLEWARE */
+
 //to make send requests of body from user in JSON format
 app.use(express.json());
+
+//44:41 подключение для отображения фото на localhost 
+app.use(express.static('static'))
+
+//39:39 подключение fileUpload
+app.use(fileUpload({}))
+
 
 //23:31, регистрация router
 
@@ -34,6 +46,7 @@ app.use(express.json());
   это слово в браузерной url которая будет стоять перед '/posts
 */
 app.use('/api', router);
+
 /* 
 post запрос из Postman сработает только по такой URL:
 10.13.1.1:5002/api/posts

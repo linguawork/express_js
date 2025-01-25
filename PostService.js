@@ -11,13 +11,24 @@
 */
 import Post from './Post.js';
 
+
+//для работв с файом
+import fileService from './fileService.js';
+
+
 class PostService {
     //подали объект
+    // 39:04, добавили файл
     async create(post, picture) {
         console.log(`Создаем пост в PostService`);
         console.log(post);
+
+        //берем сохраненный файл
+        const fileName = fileService.saveFile(picture)
+
         //создаем пост
-        const createdPost = await Post.create(post);
+        //перезаписываем объект поста для сохранения картинки
+        const createdPost = await Post.create({...post, picture: fileName});
         return createdPost
     }
 

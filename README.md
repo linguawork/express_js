@@ -84,3 +84,28 @@ npm i mongoose OR npm i mongoDB
 не связана с клиент-серверным взаимодействием
 Например, изменение данных в Базе данныx
 
+
+
+***********************************
+Uploading files to server
+39:22
+
+Install another node package:
+
+```
+npm i express-fileupload
+```
+The package file will look with added dependency:
+```
+  "dependencies": {
+    "express": "^4.21.2",
+    "express-fileupload": "^1.5.1",
+    "mongodb": "^6.12.0",
+    "mongoose": "^8.9.5"
+  },
+```
+
+Для уникальных id у файла нужно импортировать пакет:
+```
+npm i uuid
+```
