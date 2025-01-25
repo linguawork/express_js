@@ -86,7 +86,7 @@ class PostController {
             //res.status(200).json('Сервер работает ')
             res.status(200).json(post); //возврат поста
         } catch (error) {
-            res.status(500).json(error);
+            res.status(500).json(error.message);
         }
     }
 
@@ -105,7 +105,7 @@ class PostController {
 
             return res.status(200).json(posts); //get all the posts and sending back
         } catch (error) {
-            res.status(500).json(error);
+            res.status(500).json(error.message);
         }
     }
 
@@ -123,7 +123,7 @@ class PostController {
             const id_post = await PostService.getOne(req.params.id);
             return res.status(200).json(id_post); //get all the posts and sending back
         } catch(error) {
-            res.status(500).json(error);
+            res.status(500).json(error.message);
         }
     }
 
@@ -146,7 +146,7 @@ class PostController {
             const updatedPost = await PostService.update(req.body);//внутри body уже декомпозицию делает
             return res.status(200).json(updatedPost); //возврат поста
         } catch (error) {
-            res.status(500).json(error);
+            res.status(500).json(error.message);
         }
     }
 
@@ -165,7 +165,7 @@ class PostController {
             const post = await PostService.delete(req.params.id);
             return res.status(200).json(post); //возврат поста
         } catch (error) {
-            res.status(500).json(error);
+            res.status(500).json(error.message);
         }
     }
 }

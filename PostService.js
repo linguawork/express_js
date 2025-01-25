@@ -13,7 +13,7 @@ import Post from './Post.js';
 
 class PostService {
     //подали объект
-    async create(post) {
+    async create(post, picture) {
         console.log(`Создаем пост в PostService`);
         console.log(post);
         //создаем пост
